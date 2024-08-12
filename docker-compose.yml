@@ -126,6 +126,9 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    env_file:
+      - .env
+      - .env.local
     restart: always
     depends_on:
       <<: *airflow-common-depends-on
@@ -141,6 +144,9 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    env_file:
+      - .env
+      - .env.local
     restart: always
     depends_on:
       <<: *airflow-common-depends-on
@@ -164,6 +170,9 @@ services:
       # Required to handle warm shutdown of the celery workers properly
       # See https://airflow.apache.org/docs/docker-stack/entrypoint.html#signal-propagation
       DUMB_INIT_SETSID: "0"
+    env_file:
+      - .env
+      - .env.local
     restart: always
     depends_on:
       <<: *airflow-common-depends-on
@@ -173,6 +182,9 @@ services:
   airflow-triggerer:
     <<: *airflow-common
     command: triggerer
+    env_file:
+      - .env
+      - .env.local
     healthcheck:
       test: ["CMD-SHELL", 'airflow jobs check --job-type TriggererJob --hostname "$${HOSTNAME}"']
       interval: 30s
